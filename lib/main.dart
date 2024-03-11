@@ -147,80 +147,83 @@ class MakeRecipe extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     var appState = context.watch<MyAppState>();
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Title'),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-                controller: appState.titleField,
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Title'),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                  controller: appState.titleField,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'What do you call your dish?'
+                  ),
+                ),
+            ),
+            Text('Preparation instructions'),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: appState.instructionsField,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'What do you call your dish?'
+                  hintText: 'Explain how to prepare your recipe'
                 ),
               ),
-          ),
-          Text('Preparation instructions'),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: appState.instructionsField,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Explain how to prepare your recipe'
-              ),
             ),
-          ),
-          Text('Ingredients'),
-          TextField(
-                controller: appState.ingredientsField,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter ingredient and amount'
+            Text('Ingredients'),
+            TextField(
+                  controller: appState.ingredientsField,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter ingredient and amount'
+                  ),
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children:[
+                ElevatedButton(
+                  onPressed: (){
+                    appState.addIngredient();
+                  },
+                  child: Text('Add'),
+                ), 
+                ElevatedButton(
+                  onPressed: (){
+                    appState.removeIngredient();
+                  },
+                  child: Text('Remove'),
                 ),
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children:[
-              ElevatedButton(
-                onPressed: (){
-                  appState.addIngredient();
-                },
-                child: Text('Add'),
-              ), 
-              ElevatedButton(
-                onPressed: (){
-                  appState.removeIngredient();
-                },
-                child: Text('Remove'),
-              ),
-            ],
-          ),
-          Expanded(
-            child: 
-              ListView.builder(
-                itemCount: appState.ingredients.length,
-                itemBuilder: (BuildContext ctxt, int index) {
-                  return Text(
-                    appState.ingredients[index],
-                    key: UniqueKey()
-                  );
-                },
-                
-              ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: ElevatedButton(
-              onPressed: (){
-                appState.submit();
-              },
-              child: Text('Submit'),
+              ],
             ),
-          ),
-        ],
+            Expanded(
+              child: 
+                ListView.builder(
+                  itemCount: appState.ingredients.length,
+                  itemBuilder: (BuildContext ctxt, int index) {
+                    return Text(
+                      appState.ingredients[index],
+                      key: UniqueKey()
+                    );
+                  },
+                  
+                ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: ElevatedButton(
+                onPressed: (){
+                  appState.submit();
+                },
+                child: Text('Submit'),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
