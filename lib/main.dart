@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,27 +13,52 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Sous Chef',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return ChangeNotifierProvider(
+      create: (context) => MyAppState(),
+      child: MaterialApp(
+        title: 'Sous Chef',
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(0, 235, 97, 12)),
+        ),
+        home: MyHomePage(),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
 class MyAppState extends ChangeNotifier {
+  final TextEditingController titleField = TextEditingController();
+  final TextEditingController instructionsField = TextEditingController();
+  final TextEditingController ingredientsField = TextEditingController();
 
+  String? title;
+  String? instructions;
+  var ingredients = <String>[];
+  var tags = <String>[];
 
+  @override
+  void dispose() {
+    // Clean up the controllers when the widget is disposed.
+    titleField.dispose();
+    instructionsField.dispose();
+    super.dispose();
+  }
+
+  void addIngredient(){
+    if (!ingredients.contains(ingredientsField.text)){
+      ingredients.add(ingredientsField.text);
+    }
+  }
+
+  void removeIngredient(){
+    if(ingredients.isNotEmpty){
+      ingredients.removeLast();
+    }
+  }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -44,10 +71,10 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget page;
     switch(selectedIndex){
       case 0:
-        page = PlaceHolder();
+        page = MakeRecipe();
         break;
       case 1: 
-        page = PlaceHolder2();
+        page = ViewRecipe();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -64,11 +91,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   destinations: [
                     NavigationRailDestination(
                       icon: Icon(Icons.home),
-                      label: Text('Home'),
+                      label: Text('Add Recipe'),
                     ),
                     NavigationRailDestination(
                       icon: Icon(Icons.food_bank),
-                      label: Text('Add Recipe'),
+                      label: Text('View Recipe'),
                     ),
                   ],
                   selectedIndex: selectedIndex,
@@ -93,20 +120,80 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class PlaceHolder extends StatelessWidget{
+class MakeRecipe extends StatelessWidget{
   @override
   Widget build(BuildContext context){
-    // var appState = context.watch<MyAppState>();
+    var appState = context.watch<MyAppState>();
     return Center(
-      child: Text('Page1')
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Title'),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+                controller: appState.titleField,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'What do you call your dish?'
+                ),
+              ),
+          ),
+          Text('Preparation instructions'),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: appState.instructionsField,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Explain how to prepare your recipe'
+              ),
+            ),
+          ),
+          Text('Ingredients'),
+          TextField(
+                controller: appState.ingredientsField,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter ingredient and amount'
+                ),
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children:[
+              ElevatedButton(
+                onPressed: (){
+                  appState.addIngredient();
+                },
+                child: Text('Add'),
+              ), 
+              ElevatedButton(
+                onPressed: (){
+                  appState.removeIngredient();
+                },
+                child: Text('Remove'),
+              ),
+            ],
+          ),
+          ListView(
+            children: [
+              for (var ing in appState.ingredients)
+                ListTile(
+                  leading: Icon(Icons.add),
+                  title: Text(ing),
+                ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
 
-class PlaceHolder2 extends StatelessWidget{
+class ViewRecipe extends StatelessWidget{
   @override
   Widget build(BuildContext context){
-    // var appState = context.watch<MyAppState>();
+    var appState = context.watch<MyAppState>();
     return Center(
       child: Text('Page2')
     );
