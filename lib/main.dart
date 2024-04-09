@@ -1,9 +1,16 @@
 
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+
+
+
+void main() async{
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,  
+  );
   runApp(const MyApp());
 }
 
@@ -153,6 +160,7 @@ class MakeRecipe extends StatelessWidget{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text('Sous Chef'),
             Text('Title'),
             Padding(
               padding: const EdgeInsets.all(8.0),

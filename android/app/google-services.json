@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "976450895525",
+    "project_id": "souschef-aab33",
+    "storage_bucket": "souschef-aab33.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976450895525:android:fd9d05af051c20ae09974c",
+        "android_client_info": {
+          "package_name": "com.example.sous_chef"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDRlqXKotVt9btahA5kY-1zzg6MSLTuRU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
