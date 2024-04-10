@@ -89,6 +89,7 @@ void clear(){
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -151,6 +152,8 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class MakeRecipe extends StatelessWidget{
+  const MakeRecipe({super.key});
+
   @override
   Widget build(BuildContext context){
     var appState = context.watch<MyAppState>();
@@ -238,6 +241,7 @@ class MakeRecipe extends StatelessWidget{
 }
 
 class ViewRecipe extends StatelessWidget{
+  const ViewRecipe({super.key});
   @override
   Widget build(BuildContext context){
     var appState = context.watch<MyAppState>();
