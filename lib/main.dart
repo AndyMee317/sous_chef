@@ -4,10 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-
+import 'pages/login_page.dart';
 
 
 void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,  
   );
@@ -26,9 +27,9 @@ class MyApp extends StatelessWidget {
         title: 'Sous Chef',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(0, 235, 97, 12)),
+          colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(0, 244, 111, 28)),
         ),
-        home: MyHomePage(),
+        home: LoginPage(),
       ),
     );
   }
@@ -95,60 +96,24 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var selectedIndex = 0;
-  @override
   
+  @override
   Widget build(BuildContext context){
-    Widget page;
-    switch(selectedIndex){
-      case 0:
-        page = MakeRecipe();
-        break;
-      case 1: 
-        page = ViewRecipe();
-        break;
-      default:
-        throw UnimplementedError('no widget for $selectedIndex');
-    }
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Sous chef'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          child: Text('Make Recipe'),
+          onPressed: (){
 
-     return LayoutBuilder(
-      builder: (context, constraints) {
-        return Scaffold(
-          body: Row(
-            children: [
-              SafeArea(
-                child: NavigationRail(
-                  extended: constraints.maxWidth >= 600,
-                  destinations: [
-                    NavigationRailDestination(
-                      icon: Icon(Icons.home),
-                      label: Text('Add Recipe'),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.food_bank),
-                      label: Text('View Recipe'),
-                    ),
-                  ],
-                  selectedIndex: selectedIndex,
-                  onDestinationSelected: (value) {
-                    setState(() {
-                      selectedIndex = value;
-                    });
-                  },
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  child: page,
-                ),
-              ),
-            ],
-          ),
-        );
-      }
+          }
+        ),
+      ),
     );
   }
+  
 }
 
 class MakeRecipe extends StatelessWidget{
