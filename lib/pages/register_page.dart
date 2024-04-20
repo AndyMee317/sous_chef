@@ -1,7 +1,8 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class RegisterPage extends StatelessWidget{
+class RegisterPage extends StatefulWidget{
 
   final void Function()? onTap;
 
@@ -11,13 +12,56 @@ class RegisterPage extends StatelessWidget{
 
   RegisterPage({super.key, required this.onTap()});
 
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController usernameField = TextEditingController();
   final TextEditingController emailField = TextEditingController();
   final TextEditingController passwordField = TextEditingController();
   final TextEditingController confirmField = TextEditingController();
+
+  void register() async{
+    showDialog(
+      context: context, 
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
+    if(passwordField.text !=  confirmField.text){
+      Navigator.pop(context);
+
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Your passwords must match")
+        )
+      );
+    }
+
+    try{
+      UserCredential? userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailField.text, 
+        password: passwordField.text
+      );
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e){
+      Navigator.pop(context);
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(e.code)
+        )
+      );
+    }
+  }
+
   @override 
   Widget build(BuildContext context){
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         title: const Text('Sous chef'),
@@ -36,7 +80,7 @@ class RegisterPage extends StatelessWidget{
             Text('Sign up'),
 
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: usernameField,
                 obscureText: false,
@@ -48,7 +92,7 @@ class RegisterPage extends StatelessWidget{
             ),
 
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: emailField,
                 obscureText: false,
@@ -60,7 +104,7 @@ class RegisterPage extends StatelessWidget{
             ),
 
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: passwordField,
                 obscureText: true,
@@ -72,7 +116,7 @@ class RegisterPage extends StatelessWidget{
             ),
 
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: confirmField,
                 obscureText: true,
@@ -87,14 +131,12 @@ class RegisterPage extends StatelessWidget{
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                 child: Text('Register'),
-                onPressed: (){
-              
-                }
+                onPressed: register
               ),
             ),
 
             GestureDetector(
-              onTap: onTap,
+              onTap: widget.onTap,
               child: Text("Already a chef? Login Here", 
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,
