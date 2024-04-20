@@ -8,13 +8,14 @@ class LoginPage extends StatelessWidget{
   final TextEditingController emailField = TextEditingController();
   final TextEditingController passwordField = TextEditingController();
 
+  final void Function()? onTap;
   // todo: add login function
   
   // todo: add sign up function
 
   // todo: add forgot password function
 
-  LoginPage({super.key});
+  LoginPage({super.key, required this.onTap()});
   @override 
   Widget build(BuildContext context){
     return Scaffold(
@@ -75,7 +76,7 @@ class LoginPage extends StatelessWidget{
               ),
             ),
             GestureDetector(
-              onTap: (){},
+              onTap: onTap,
               child: Text("New? Sign up here", 
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,

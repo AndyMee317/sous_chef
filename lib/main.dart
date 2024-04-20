@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 import 'pages/login_page.dart';
+import 'pages/register_page.dart';
 
 
 void main() async{
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(0, 244, 111, 28)),
         ),
-        home: LoginPage(),
+        home: RegisterPage(),
       ),
     );
   }

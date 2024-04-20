@@ -93,6 +93,16 @@ class RegisterPage extends StatelessWidget{
               ),
             ),
 
+            GestureDetector(
+              onTap: (){},
+              child: Text("Already a chef? Login Here", 
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold
+                )
+              ),
+            ),
+
           ],
         ),
       ),
