@@ -10,11 +10,12 @@ class RegisterPage extends StatelessWidget{
   final TextEditingController passwordField = TextEditingController();
   final TextEditingController confirmField = TextEditingController();
 
+  final void Function()? onTap;
   // todo: add login function
   
   // todo: add sign up function
 
-  RegisterPage({super.key});
+  RegisterPage({super.key, required this.onTap()});
   @override 
   Widget build(BuildContext context){
     return Scaffold(
