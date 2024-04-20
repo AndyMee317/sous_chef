@@ -5,17 +5,19 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class RegisterPage extends StatelessWidget{
-  final TextEditingController usernameField = TextEditingController();
-  final TextEditingController emailField = TextEditingController();
-  final TextEditingController passwordField = TextEditingController();
-  final TextEditingController confirmField = TextEditingController();
 
   final void Function()? onTap;
+
   // todo: add login function
   
   // todo: add sign up function
 
   RegisterPage({super.key, required this.onTap()});
+
+  final TextEditingController usernameField = TextEditingController();
+  final TextEditingController emailField = TextEditingController();
+  final TextEditingController passwordField = TextEditingController();
+  final TextEditingController confirmField = TextEditingController();
   @override 
   Widget build(BuildContext context){
     return Scaffold(
