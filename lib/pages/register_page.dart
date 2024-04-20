@@ -41,20 +41,22 @@ class _RegisterPageState extends State<RegisterPage> {
       );
     }
 
-    try{
-      UserCredential? userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailField.text, 
-        password: passwordField.text
-      );
-      Navigator.pop(context);
-    } on FirebaseAuthException catch (e){
-      Navigator.pop(context);
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text(e.code)
-        )
-      );
+    else{
+      try{
+        UserCredential? userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailField.text, 
+          password: passwordField.text,
+        );
+        Navigator.pop(context);
+      } on FirebaseAuthException catch (e){
+        Navigator.pop(context);
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(e.code)
+          )
+        );
+      }
     }
   }
 
