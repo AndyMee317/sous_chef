@@ -5,10 +5,11 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget{
-  final TextEditingController emailField = TextEditingController();
-  final TextEditingController passwordField = TextEditingController();
 
   final void Function()? onTap;
+
+  final TextEditingController emailField = TextEditingController();
+  final TextEditingController passwordField = TextEditingController();
   // todo: add login function
   
   // todo: add sign up function
