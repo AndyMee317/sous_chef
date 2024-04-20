@@ -24,9 +24,9 @@ class LoginPage extends StatelessWidget{
             const SizedBox(
               height: 30,
             ),
-            Text('Login'),
+            Text('Welcome Back!'),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(15.0),
               child: TextField(
                 controller: emailField,
                 obscureText: false,
@@ -37,7 +37,7 @@ class LoginPage extends StatelessWidget{
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(15.0),
               child: TextField(
                 controller: passwordField,
                 obscureText: true,
@@ -47,14 +47,27 @@ class LoginPage extends StatelessWidget{
                 ),
               ),
             ),
-
+            Text("Forgot Password", 
+              style: TextStyle(color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.bold
+              )
+            ),
             // TODO: implement "forgor password function"
-            
-            ElevatedButton(
-              child: Text('Submit'),
-              onPressed: (){
 
-              }
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                child: Text('Login'),
+                onPressed: (){
+              
+                }
+              ),
+            ),
+            Text("New? Sign up here", 
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.bold
+              )
             ),
           ],
         ),
