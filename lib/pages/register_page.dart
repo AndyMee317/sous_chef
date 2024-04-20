@@ -34,6 +34,19 @@ class RegisterPage extends StatelessWidget{
             ),
 
             Text('Sign up'),
+
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: TextField(
+                controller: usernameField,
+                obscureText: false,
+                decoration: InputDecoration(
+                  hintText: 'Username',
+                  border: OutlineInputBorder()
+                ),
+              ),
+            ),
+
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: TextField(
