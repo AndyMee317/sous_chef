@@ -4,8 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-import 'pages/login_page.dart';
-import 'pages/register_page.dart';
+import 'package:sous_chef/auth/login_or_register.dart';
 
 
 void main() async{
@@ -31,7 +30,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(0, 244, 111, 28)),
         ),
-        home: RegisterPage(),
+        home: LoginOrRegister(),
       ),
     );
   }
