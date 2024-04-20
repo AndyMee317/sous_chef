@@ -12,7 +12,12 @@
           "package_name": "com.example.sous_chef"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "976450895525-ptqepa4svfqieg9e8j6e7qarg3pn0qkv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBDRlqXKotVt9btahA5kY-1zzg6MSLTuRU"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976450895525-8bktvbto5pb0fugsqte430phcvs98ron.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "976450895525-a30uqvjt07rj045gl2qcr2hq3qbgvmjb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.sousChef"
+              }
+            }
+          ]
         }
       }
     }
