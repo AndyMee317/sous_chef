@@ -1,10 +1,18 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget{
   final TextEditingController emailField = TextEditingController();
   final TextEditingController passwordField = TextEditingController();
+
+  // todo: add login function
+  
+  // todo: add sign up function
+
+  // todo: add forgot password function
 
   LoginPage({super.key});
   @override 
@@ -47,12 +55,15 @@ class LoginPage extends StatelessWidget{
                 ),
               ),
             ),
-            Text("Forgot Password", 
-              style: TextStyle(color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.bold
-              )
+
+            GestureDetector(
+              onTap: (){},
+              child: Text("Forgot Password", 
+                style: TextStyle(color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold
+                )
+              ),
             ),
-            // TODO: implement "forgor password function"
 
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -63,11 +74,14 @@ class LoginPage extends StatelessWidget{
                 }
               ),
             ),
-            Text("New? Sign up here", 
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.bold
-              )
+            GestureDetector(
+              onTap: (){},
+              child: Text("New? Sign up here", 
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold
+                )
+              ),
             ),
           ],
         ),
