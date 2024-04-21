@@ -1,19 +1,45 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget{
+class LoginPage extends StatefulWidget{
 
   final void Function()? onTap;
 
-  final TextEditingController emailField = TextEditingController();
-  final TextEditingController passwordField = TextEditingController();
-  // todo: add login function
-  
-  // todo: add sign up function
-
-  // todo: add forgot password function
-
   LoginPage({super.key, required this.onTap()});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController emailField = TextEditingController();
+
+  final TextEditingController passwordField = TextEditingController();
+
+  // todo: add login function
+  void login () async{
+    showDialog(
+      context: context, 
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+    
+    try{
+      await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailField.text, password: passwordField.text);
+      if (context.mounted) Navigator.pop(context);
+    } on FirebaseAuthException catch (e){
+        Navigator.pop(context);
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(e.code)
+          )
+        );
+      }
+  }
+
   @override 
   Widget build(BuildContext context){
     return Scaffold(
@@ -69,13 +95,11 @@ class LoginPage extends StatelessWidget{
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                 child: Text('Login'),
-                onPressed: (){
-              
-                }
+                onPressed: login,
               ),
             ),
             GestureDetector(
-              onTap: onTap,
+              onTap: widget.onTap,
               child: Text("New? Sign up here", 
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,
