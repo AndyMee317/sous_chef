@@ -62,9 +62,10 @@ class HomePage extends StatelessWidget{
         onPressed: (){
           Navigator.pushNamed(context, '/make_recipe_page');
         },
-        tooltip: 'Increment',
+        tooltip: 'Make recipe',
         child: const Icon(Icons.add),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
