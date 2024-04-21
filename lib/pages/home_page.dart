@@ -43,6 +43,7 @@ class HomePage extends StatelessWidget{
               title: Text("My Profile"),
               onTap: () {
                 Navigator.pop(context);
+                Navigator.pushNamed(context, "/view_profile_page");
               }
             ),
 
@@ -51,6 +52,7 @@ class HomePage extends StatelessWidget{
               title: Text("Logout"),
               onTap: () {
                 Navigator.pop(context);
+                logout();
               }
             ),
           ],

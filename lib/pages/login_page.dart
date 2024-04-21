@@ -94,8 +94,8 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
-                child: Text('Login'),
                 onPressed: login,
+                child: Text('Login'),
               ),
             ),
             GestureDetector(

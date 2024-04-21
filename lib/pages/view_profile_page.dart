@@ -15,12 +15,8 @@ class ViewProfilePage extends StatelessWidget{
       appBar: AppBar(
         title: Text("My profile"),
         backgroundColor: Theme.of(context).colorScheme.primary,
-        actions: [
-          IconButton(
-            onPressed: logout,
-            icon: Icon(Icons.logout),
-          ),
-        ],
+        elevation: 0,
+        
       ),
       drawer: Drawer(
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -35,6 +31,7 @@ class ViewProfilePage extends StatelessWidget{
               title: Text("Home"),
               onTap: () {
                 Navigator.pop(context);
+                Navigator.pushNamed(context, "/home_page");
               }
             ),
 
@@ -47,10 +44,11 @@ class ViewProfilePage extends StatelessWidget{
             ),
 
             ListTile(
-              leading: Icon(Icons.person),
+              leading: Icon(Icons.logout),
               title: Text("Logout"),
               onTap: () {
                 Navigator.pop(context);
+                logout();
               }
             ),
           ],

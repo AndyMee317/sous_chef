@@ -1,5 +1,6 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget{
@@ -47,6 +48,9 @@ class _RegisterPageState extends State<RegisterPage> {
           email: emailField.text, 
           password: passwordField.text,
         );
+
+        createUserDocument(userCredential);
+
         Navigator.pop(context);
       } on FirebaseAuthException catch (e){
         Navigator.pop(context);
@@ -59,6 +63,15 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     }
   }
+
+ Future<void> createUserDocument(UserCredential? userCredential) async {
+  if (userCredential != null && userCredential.user != null){
+    await FirebaseFirestore.instance.collection("Users").doc(userCredential.user!.email).set({
+      'email': userCredential.user!.email,
+      'username': usernameField.text,
+  });
+  }
+ }
 
   @override 
   Widget build(BuildContext context){
@@ -132,8 +145,8 @@ class _RegisterPageState extends State<RegisterPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
-                child: Text('Register'),
-                onPressed: register
+                onPressed: register,
+                child: Text('Register')
               ),
             ),
 
