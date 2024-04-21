@@ -5,7 +5,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 import 'package:sous_chef/auth/auth.dart';
-
+import 'package:sous_chef/auth/login_or_register.dart';
+import 'package:sous_chef/pages/home_page.dart';
+import 'package:sous_chef/pages/view_profile_page.dart';
 
 
 void main() async{
@@ -31,6 +33,11 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(210, 255, 106, 0)),
         ),
         home: AuthPage(),
+        routes: {
+          "/login_or_register_page": (context) => const LoginOrRegister(),
+          "/home_page": (context) => const HomePage(),
+          "/view_profile_page": (context) => const ViewProfilePage()
+        }
       ),
     );
   }
