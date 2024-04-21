@@ -22,6 +22,40 @@ class HomePage extends StatelessWidget{
           ),
         ],
       ),
+      drawer: Drawer(
+        backgroundColor: Theme.of(context).colorScheme.background,
+          child: Column(
+          children: [
+            DrawerHeader(
+              child: Icon(Icons.kitchen)
+            ),
+
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text("Home"),
+              onTap: () {
+                Navigator.pop(context);
+              }
+            ),
+
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text("My Profile"),
+              onTap: () {
+                Navigator.pop(context);
+              }
+            ),
+
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text("Logout"),
+              onTap: () {
+                Navigator.pop(context);
+              }
+            ),
+          ],
+        )
+      ),
     );
   }
 }

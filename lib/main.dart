@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         title: 'Sous Chef',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(0, 244, 111, 28)),
+          colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(210, 255, 106, 0)),
         ),
         home: AuthPage(),
       ),
