@@ -13,16 +13,37 @@ class MakeRecipePage extends StatelessWidget{
   @override 
 
   Widget build(BuildContext context){
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Make Recipe"),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        actions: [
-          IconButton(
-            onPressed: logout,
-            icon: Icon(Icons.logout),
+    return DefaultTabController(
+      initialIndex: 0,
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Make Recipe"),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          actions: [
+            IconButton(
+              onPressed: logout,
+              icon: Icon(Icons.logout),
+            ),
+          ],
+          bottom: const TabBar(
+            labelColor: Colors.white,
+            tabs: <Widget>[
+              Tab(icon: Icon(Icons.filter_1 )),
+              Tab(icon: Icon(Icons.filter_2)),
+            ],
           ),
-        ],
+        ),
+        body: const TabBarView(
+          children: <Widget>[
+            Center(
+              child: Text("Lorem ipsum"),
+            ),
+            Center(
+              child: Text("Lorem ipsum2"),
+            ),
+          ],
+        ),
       ),
     );
   }
