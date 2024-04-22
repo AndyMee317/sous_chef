@@ -54,6 +54,25 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
     }
   }
 
+  void submit(){
+    if(titleField.text.isEmpty || instructionsField.text.isEmpty || ingredients.isEmpty){
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Please make sure your recipe has a title, instructions, and at least one ingredient")
+        )
+      );
+    }
+    else{
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Success!")
+        )
+      );
+    }
+  }
+
   @override 
 
 
@@ -177,6 +196,13 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
               ),
             ),
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: (){
+            submit();
+          },
+          tooltip: 'submit',
+          child: const Icon(Icons.check),
         ),
       ),
     );
