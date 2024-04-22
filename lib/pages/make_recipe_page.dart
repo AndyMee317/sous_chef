@@ -2,15 +2,24 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class MakeRecipePage extends StatelessWidget{
+class MakeRecipePage extends StatefulWidget{
 
   const MakeRecipePage ({super.key});
+
+  @override
+  State<MakeRecipePage> createState() => _MakeRecipePageState();
+}
+
+class _MakeRecipePageState extends State<MakeRecipePage> {
+
+  final TextEditingController titleField = TextEditingController();
 
   void logout() {
     FirebaseAuth.instance.signOut(); 
   }
 
   @override 
+
 
   Widget build(BuildContext context){
     return DefaultTabController(
@@ -34,10 +43,25 @@ class MakeRecipePage extends StatelessWidget{
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: <Widget>[
             Center(
-              child: Text("Lorem ipsum"),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Title'),
+                  Padding(
+                    padding: EdgeInsets.all(26.0),
+                    child: TextField(
+                        controller: titleField,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'What do you call your dish?'
+                        ),
+                      ),
+                  ),
+                ],
+              ),
             ),
             Center(
               child: Text("Lorem ipsum2"),

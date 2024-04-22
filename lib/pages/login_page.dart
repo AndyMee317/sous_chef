@@ -50,6 +50,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       body:Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               Icons.kitchen_outlined,

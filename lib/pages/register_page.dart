@@ -82,85 +82,88 @@ class _RegisterPageState extends State<RegisterPage> {
         title: const Text('Sous chef'),
       ),
       body:Center(
-        child: Column(
-          children: [
-            Icon(
-              Icons.person,
-              size: 80,
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-
-            Text('Sign up'),
-
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: usernameField,
-                obscureText: false,
-                decoration: InputDecoration(
-                  hintText: 'Username',
-                  border: OutlineInputBorder()
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.person,
+                size: 80,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+          
+              Text('Sign up'),
+          
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: usernameField,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    hintText: 'Username',
+                    border: OutlineInputBorder()
+                  ),
                 ),
               ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: emailField,
-                obscureText: false,
-                decoration: InputDecoration(
-                  hintText: 'Email',
-                  border: OutlineInputBorder()
+          
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: emailField,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    hintText: 'Email',
+                    border: OutlineInputBorder()
+                  ),
                 ),
               ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: passwordField,
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: 'Password',
-                  border: OutlineInputBorder()
+          
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: passwordField,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: 'Password',
+                    border: OutlineInputBorder()
+                  ),
                 ),
               ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: confirmField,
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: 'Confirm Password',
-                  border: OutlineInputBorder()
+          
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: confirmField,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: 'Confirm Password',
+                    border: OutlineInputBorder()
+                  ),
                 ),
               ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: register,
-                child: Text('Register')
+          
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: register,
+                  child: Text('Register')
+                ),
               ),
-            ),
-
-            GestureDetector(
-              onTap: widget.onTap,
-              child: Text("Already a chef? Login Here", 
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontWeight: FontWeight.bold
-                )
+          
+              GestureDetector(
+                onTap: widget.onTap,
+                child: Text("Already a chef? Login Here", 
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold
+                  )
+                ),
               ),
-            ),
-
-          ],
+          
+            ],
+          ),
         ),
       ),
     );
