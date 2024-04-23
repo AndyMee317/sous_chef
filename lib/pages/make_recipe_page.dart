@@ -1,10 +1,12 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sous_chef/database/firestore.dart';
 
 class MakeRecipePage extends StatefulWidget{
 
   const MakeRecipePage ({super.key});
+  
 
   @override
   State<MakeRecipePage> createState() => _MakeRecipePageState();
@@ -12,9 +14,11 @@ class MakeRecipePage extends StatefulWidget{
 
 class _MakeRecipePageState extends State<MakeRecipePage> {
 
+  final FirestoreDatabase database = FirestoreDatabase();
+
   final TextEditingController titleField = TextEditingController();
   final TextEditingController instructionsField = TextEditingController();
-  final TextEditingController ingredientsField = new TextEditingController();
+  final TextEditingController ingredientsField = TextEditingController();
 
   List<String> ingredients = [];
   void logout() {
@@ -64,6 +68,7 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
       );
     }
     else{
+      database.postRecipe(titleField.text, instructionsField.text, ingredients);
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -176,11 +181,11 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
                       ),
                       ],
                     ),
-                  new Expanded(
-                    child: new ListView.builder(
+                    Expanded(
+                    child: ListView.builder(
                       itemCount: ingredients.length,
                       itemBuilder: (BuildContext ctxt, int Index){
-                        return new Text("\u2022 " + ingredients[Index]);
+                        return Text("\u2022 " + ingredients[Index]);
                       }
                     ) 
                   ),
