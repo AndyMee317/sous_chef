@@ -20,8 +20,10 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
   final TextEditingController titleField = TextEditingController();
   final TextEditingController instructionsField = TextEditingController();
   final TextEditingController ingredientsField = TextEditingController();
+  final TextEditingController tagsField = TextEditingController();
 
   List<String> ingredients = [];
+  List<String> tags = [];
 
   void logout() {
     FirebaseAuth.instance.signOut(); 
@@ -53,6 +55,32 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
     }
   }
 
+  void addTag(){
+
+    if(tagsField.text.isEmpty){
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Please enter something in the field")
+          )
+        );
+    }
+
+    if(!tags.contains(tagsField.text)){
+      tags.add(tagsField.text);
+      tagsField.clear();
+      setState((){});
+    }
+    else{
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Tag already added")
+        )
+      );
+    }
+  }
+
   void removeIngredient(){
     if(ingredients.isNotEmpty){
       ingredients.removeLast();
@@ -60,23 +88,31 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
     }
   }
 
+  void removeTag(){
+    if(tags.isNotEmpty){
+      tags.removeLast();
+      setState((){});
+    }
+  }
+
   void submit(){
     
-    if(titleField.text.isEmpty || instructionsField.text.isEmpty || ingredients.isEmpty){
+    if(titleField.text.isEmpty || instructionsField.text.isEmpty || ingredients.isEmpty || tags.isEmpty){
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text("Please make sure your recipe has a title, instructions, and at least one ingredient")
+          title: Text("Please make sure your recipe has a title, instructions, at least one ingredient, and at least one tag")
         )
       );
     }
     else{
-      database.postRecipe(titleField.text, instructionsField.text, ingredients);
+      database.postRecipe(titleField.text, instructionsField.text, ingredients, tags);
       showDialog(
         context: context,
+        useRootNavigator: false,
         builder: (context) => AlertDialog(
           title: Text("Success!")
-        )
+        ),
       );
     }
   }
@@ -199,7 +235,45 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Images coming soon")
+                  Text("4. Tags"),
+                  Padding(
+                    padding: const EdgeInsets.all(26.0),
+                    child: TextField(
+                      controller: tagsField,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Enter relavant tags for this recipe (eg ingredients, meal type)'
+                      ),
+                      onSubmitted: (text){
+                        addTag();
+                      },
+                    ),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children:[
+                      ElevatedButton(
+                        onPressed: (){
+                          addTag();
+                        },
+                        child: Text('Add'),
+                      ), 
+                      ElevatedButton(
+                        onPressed: (){
+                          removeTag();
+                        },
+                        child: Text('Remove'),
+                      ),
+                      ],
+                    ),
+                    Expanded(
+                    child: ListView.builder(
+                      itemCount: tags.length,
+                      itemBuilder: (BuildContext ctxt, int Index){
+                        return Text("#" + tags[Index]);
+                      }
+                    ) 
+                  ),
                 ],
               ),
             ),
