@@ -4,11 +4,13 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
+// pages
 import 'package:sous_chef/auth/auth.dart';
 import 'package:sous_chef/auth/login_or_register.dart';
 import 'package:sous_chef/pages/home_page.dart';
 import 'package:sous_chef/pages/view_profile_page.dart';
 import 'package:sous_chef/pages/make_recipe_page.dart';
+import 'package:sous_chef/pages/view_recipe_page.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,7 +39,8 @@ class MyApp extends StatelessWidget {
           "/login_or_register_page": (context) => const LoginOrRegister(),
           "/home_page": (context) => const HomePage(),
           "/view_profile_page": (context) => ViewProfilePage(),
-          "/make_recipe_page": (context) => const MakeRecipePage()
+          "/make_recipe_page": (context) => const MakeRecipePage(),
+          "/view_recipe_page": (context) => const ViewRecipePage()
         }
       ),
     );

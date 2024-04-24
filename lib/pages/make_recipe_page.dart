@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sous_chef/database/firestore.dart';
@@ -21,6 +22,7 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
   final TextEditingController ingredientsField = TextEditingController();
 
   List<String> ingredients = [];
+
   void logout() {
     FirebaseAuth.instance.signOut(); 
   }
@@ -59,6 +61,7 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
   }
 
   void submit(){
+    
     if(titleField.text.isEmpty || instructionsField.text.isEmpty || ingredients.isEmpty){
       showDialog(
         context: context,

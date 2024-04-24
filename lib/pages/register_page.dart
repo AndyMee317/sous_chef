@@ -7,9 +7,7 @@ class RegisterPage extends StatefulWidget{
 
   final void Function()? onTap;
 
-  // todo: add login function
   
-  // todo: add sign up function
 
   RegisterPage({super.key, required this.onTap()});
 
