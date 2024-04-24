@@ -107,13 +107,7 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
     }
     else{
       database.postRecipe(titleField.text, instructionsField.text, ingredients, tags);
-      showDialog(
-        context: context,
-        useRootNavigator: false,
-        builder: (context) => AlertDialog(
-          title: Text("Success!")
-        ),
-      );
+      Navigator.pop(context);
     }
   }
 
