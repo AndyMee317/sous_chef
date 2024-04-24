@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
           "/home_page": (context) => const HomePage(),
           "/view_profile_page": (context) => ViewProfilePage(),
           "/make_recipe_page": (context) => const MakeRecipePage(),
-          "/view_recipe_page": (context) => const ViewRecipePage()
+          "/view_recipe_page": (context) => ViewRecipePage()
         }
       ),
     );

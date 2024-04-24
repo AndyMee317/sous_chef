@@ -49,6 +49,15 @@ class HomePage extends StatelessWidget{
 
             ListTile(
               leading: Icon(Icons.person),
+              title: Text("Test View Recipe"),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, "/view_recipe_page");
+              }
+            ),
+
+            ListTile(
+              leading: Icon(Icons.person),
               title: Text("Logout"),
               onTap: () {
                 Navigator.pop(context);
