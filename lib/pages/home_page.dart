@@ -1,10 +1,21 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
-class HomePage extends StatelessWidget{
+const List<String> searchType = <String> ['tags', 'title'];
+String currentSearchType = 'tags';
+
+final TextEditingController searchField = TextEditingController();
+
+class HomePage extends StatefulWidget{
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   void logout() {
     FirebaseAuth.instance.signOut(); 
   }
@@ -66,6 +77,64 @@ class HomePage extends StatelessWidget{
             ),
           ],
         )
+      ),
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      flex: 2,
+                      child: SizedBox(
+                        height: 55,
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: TextField(
+                              controller: searchField,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                hintText: 'Search'
+                              ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: DropdownButton(
+                        value: currentSearchType,
+                        hint: Text("Search By..."),
+                        icon: const Icon(Icons.arrow_downward),
+                        items: searchType.map<DropdownMenuItem<String>>((String value){
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(), 
+                        onChanged: (String? value){
+                          setState((){
+                            currentSearchType = value!;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                
+              ],
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
