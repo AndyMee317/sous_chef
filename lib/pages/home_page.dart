@@ -1,11 +1,12 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:sous_chef/database/firestore.dart';
 
 const List<String> searchType = <String> ['tags', 'title'];
 String currentSearchType = 'tags';
-
+final FirestoreDatabase database = FirestoreDatabase();
 final TextEditingController searchField = TextEditingController();
 
 class HomePage extends StatefulWidget{
@@ -127,11 +128,55 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                
-              ],
+          Container(
+            margin: const EdgeInsets.all(10.0),
+            alignment: Alignment.bottomCenter,
+      
+            child: SingleChildScrollView(
+              child: Column(
+
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  StreamBuilder(
+                    stream: database.getRecipes(),
+                    builder: (context, snapshot){
+                      if(snapshot.connectionState == ConnectionState.waiting){
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+            
+                      final recipes = snapshot.data!.docs;
+            
+                      if(snapshot.data == null || recipes.isEmpty){
+                        return Center(
+                          child: Text("No recipes found")
+                        );
+                      }
+            
+                      return ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: recipes.length,
+                          itemBuilder: (context, index) {
+            
+                            final recipe = recipes[index];
+                            String title = recipe['title'];
+                            String posterEmail = recipe['UserEmail'];
+                            String id = recipe.id;
+                            Timestamp timestamp = recipe['timestamp'];
+            
+                            return ListTile(
+                              title: Text(title),
+                              subtitle: Text('by $posterEmail'),
+                            );
+                          },
+                        );
+                      //);
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ],
