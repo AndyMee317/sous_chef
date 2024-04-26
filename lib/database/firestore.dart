@@ -23,4 +23,14 @@ class FirestoreDatabase{
     final recipeStream = FirebaseFirestore.instance.collection('Recipes').orderBy('timestamp', descending: true).snapshots();
     return recipeStream;
   }
+
+  Stream<QuerySnapshot> searchRecipesTitle(String query){
+    final searchResultStream = FirebaseFirestore.instance.collection('Recipes').where('title', isEqualTo: query).snapshots();
+    return searchResultStream; 
+  }
+
+  Stream<QuerySnapshot> searchRecipesTags(String query){
+    final searchResultStream = FirebaseFirestore.instance.collection('Recipes').where('tags', arrayContains: query).snapshots();
+    return searchResultStream; 
+  }
 }
