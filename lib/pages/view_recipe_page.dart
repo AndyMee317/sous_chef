@@ -13,8 +13,6 @@ class ViewRecipePage extends StatefulWidget{
 }
 
 class _ViewRecipePageState extends State<ViewRecipePage> {
-  String instructions = "This is how you make this\n 1: you do this\n 2: you do that \n 3: you lastly do this";
-  List<String> tags = ["one", "two", "three", "four", "five"];
 
   void logout() {
     FirebaseAuth.instance.signOut(); 
