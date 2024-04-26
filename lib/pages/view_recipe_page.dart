@@ -62,7 +62,7 @@ class _ViewRecipePageState extends State<ViewRecipePage> {
                               fontWeight: FontWeight.bold
                             ),
                           ),
-                          Text(" By ${recipe!['UserEmail']}",
+                          Text(" By ${recipe['UserEmail']}",
                             style: TextStyle(
                               fontWeight: FontWeight.normal
                             ),
@@ -78,10 +78,10 @@ class _ViewRecipePageState extends State<ViewRecipePage> {
                       ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: recipe!['ingredients'].length,
+                        itemCount: recipe['ingredients'].length,
                         
                         itemBuilder: (BuildContext ctxt, int index){
-                          return Center(child: Text("\u2022 " + recipe!['ingredients'][index]));
+                          return Center(child: Text("\u2022 " + recipe['ingredients'][index]));
                         }
                       ),
                       Text("Instructions:",
@@ -90,7 +90,7 @@ class _ViewRecipePageState extends State<ViewRecipePage> {
                           fontWeight: FontWeight.bold
                         ),
                       ),
-                      Text(recipe!['instructions'],
+                      Text(recipe['instructions'],
                         style: TextStyle(
                           fontSize: 18
                         ),
@@ -104,12 +104,12 @@ class _ViewRecipePageState extends State<ViewRecipePage> {
                       ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: recipe!['tags'].length,
+                        itemCount: recipe['tags'].length,
                         
                         itemBuilder: (BuildContext ctxt, int index){
                           return Center(
                             child: GestureDetector(
-                              child: Text("#" + recipe!['tags'][index])
+                              child: Text("#" + recipe['tags'][index])
                             ),
                           );
                         }
