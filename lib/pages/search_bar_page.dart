@@ -125,6 +125,17 @@ class _SearchBarPageState extends State<SearchBarPage> {
               ],
             ),
           ),
+          ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/search_results_page',
+                    arguments: [searchField.text, currentSearchType]
+                  );
+                },
+                icon: Icon(Icons.search),
+                label: Text('Search'),
+              ),
         ],
       ),
     );
