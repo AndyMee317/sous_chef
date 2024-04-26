@@ -4,10 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sous_chef/database/firestore.dart';
 
-const List<String> searchType = <String> ['tags', 'title'];
-String currentSearchType = 'tags';
 final FirestoreDatabase database = FirestoreDatabase();
-final TextEditingController searchField = TextEditingController();
+
 
 class HomePage extends StatefulWidget{
   const HomePage({super.key});
@@ -28,6 +26,12 @@ class _HomePageState extends State<HomePage> {
         title: Text("Welcome Home!"),
         backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed:(){
+              Navigator.pushNamed(context, '/search_bar_page');
+            }
+          ),
           IconButton(
             onPressed: logout,
             icon: Icon(Icons.logout),
@@ -81,53 +85,6 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Stack(
         children: [
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Flexible(
-                      flex: 2,
-                      child: SizedBox(
-                        height: 55,
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: TextField(
-                              controller: searchField,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'Search'
-                              ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: DropdownButton(
-                        value: currentSearchType,
-                        hint: Text("Search By..."),
-                        icon: const Icon(Icons.arrow_downward),
-                        items: searchType.map<DropdownMenuItem<String>>((String value){
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(), 
-                        onChanged: (String? value){
-                          setState((){
-                            currentSearchType = value!;
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
           Container(
             margin: const EdgeInsets.all(10.0),
             alignment: Alignment.bottomCenter,
@@ -169,6 +126,9 @@ class _HomePageState extends State<HomePage> {
                             return ListTile(
                               title: Text(title),
                               subtitle: Text('by $posterEmail'),
+                              onTap: (){
+                                Navigator.pushNamed(context, '/view_recipe_page', arguments: id);
+                              }
                             );
                           },
                         );
