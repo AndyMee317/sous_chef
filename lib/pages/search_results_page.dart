@@ -4,9 +4,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sous_chef/database/firestore.dart';
 
-class SearchResultsPage extends StatelessWidget{
+final FirestoreDatabase database = FirestoreDatabase();
+class SearchResultsPage extends StatefulWidget{
   const SearchResultsPage({super.key});
 
+  @override
+  State<SearchResultsPage> createState() => _SearchResultsPageState();
+}
+
+class _SearchResultsPageState extends State<SearchResultsPage> {
   @override 
 
   Widget build(BuildContext context){    
@@ -71,13 +77,61 @@ class SearchResultsPage extends StatelessWidget{
           ],
         )
       ),
-      body: Column(
-        children: [
-          Text(searchQuery),
-          Text(searchType),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(searchType),
+            StreamBuilder(
+              stream: database.searchRecipes(searchQuery, searchType),
+              builder: (context, snapshot){
+                if(snapshot.connectionState == ConnectionState.waiting){
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                if (snapshot.hasError) {
+                  print(snapshot.error);
+                  return Center(
+                    child: Text('Error: ${snapshot.error}'),
+                  );
+                }
+
+                final recipes = snapshot.data!.docs;
+
+                if(snapshot.data == null || recipes.isEmpty){
+                  return Center(
+                    child: Text("No results found")
+                  );
+                }
+
+                return ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: recipes.length,
+                  itemBuilder: (context, index) {
+    
+                    final recipe = recipes[index];
+                    String title = recipe['title'];
+                    String posterEmail = recipe['UserEmail'];
+                    String id = recipe.id;
+                    Timestamp timestamp = recipe['timestamp'];
+    
+                    return ListTile(
+                      title: Text(title),
+                      subtitle: Text('by $posterEmail'),
+                      onTap: (){
+                        Navigator.pushNamed(context, '/view_recipe_page', arguments: id);
+                      }
+                    );
+                  },
+                );
+              }
+            ),
+          ],
+        ),
       ),
     );
   }
-
 }

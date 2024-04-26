@@ -65,15 +65,6 @@ class _HomePageState extends State<HomePage> {
 
             ListTile(
               leading: Icon(Icons.person),
-              title: Text("Test View Recipe"),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, "/view_recipe_page");
-              }
-            ),
-
-            ListTile(
-              leading: Icon(Icons.person),
               title: Text("Logout"),
               onTap: () {
                 Navigator.pop(context);
@@ -112,27 +103,26 @@ class _HomePageState extends State<HomePage> {
                       }
             
                       return ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: recipes.length,
-                          itemBuilder: (context, index) {
-            
-                            final recipe = recipes[index];
-                            String title = recipe['title'];
-                            String posterEmail = recipe['UserEmail'];
-                            String id = recipe.id;
-                            Timestamp timestamp = recipe['timestamp'];
-            
-                            return ListTile(
-                              title: Text(title),
-                              subtitle: Text('by $posterEmail'),
-                              onTap: (){
-                                Navigator.pushNamed(context, '/view_recipe_page', arguments: id);
-                              }
-                            );
-                          },
-                        );
-                      //);
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: recipes.length,
+                        itemBuilder: (context, index) {
+          
+                          final recipe = recipes[index];
+                          String title = recipe['title'];
+                          String posterEmail = recipe['UserEmail'];
+                          String id = recipe.id;
+                          Timestamp timestamp = recipe['timestamp'];
+          
+                          return ListTile(
+                            title: Text(title),
+                            subtitle: Text('by $posterEmail'),
+                            onTap: (){
+                              Navigator.pushNamed(context, '/view_recipe_page', arguments: id);
+                            }
+                          );
+                        },
+                      );
                     },
                   ),
                 ],
