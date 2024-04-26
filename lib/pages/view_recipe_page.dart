@@ -52,7 +52,6 @@ class _ViewRecipePageState extends State<ViewRecipePage> {
               children:[
                 SingleChildScrollView(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Row(
                         children: [
