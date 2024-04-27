@@ -1,8 +1,6 @@
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sous_chef/database/firestore.dart';
 
 const List<String> searchType = <String> ['tags', 'title'];
 String currentSearchType = 'tags';
@@ -22,6 +20,7 @@ class _SearchBarPageState extends State<SearchBarPage> {
     FirebaseAuth.instance.signOut(); 
   }
 
+  @override
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(

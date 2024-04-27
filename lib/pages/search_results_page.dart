@@ -25,7 +25,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text("Results for " + searchQuery),
+        title: Text("Results for $searchQuery"),
         backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           IconButton(
