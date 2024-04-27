@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sous_chef/database/firestore.dart';
@@ -7,6 +8,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sous_chef/utils.dart';
 import 'dart:typed_data';
+import 'dart:math';
 
 class MakeRecipePage extends StatefulWidget{
 
@@ -21,6 +23,7 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
 
   final FirestoreDatabase database = FirestoreDatabase();
   final storage = FirebaseStorage.instance;
+  User? user = FirebaseAuth.instance.currentUser;
 
   final TextEditingController titleField = TextEditingController();
   final TextEditingController instructionsField = TextEditingController();
@@ -110,9 +113,8 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
   }
 
   void submit() async{
-
     if(_image != null){
-      imgURL = await FirebaseStorageDatabase().uploadImage('recipe image', _image!);
+      imgURL = await FirebaseStorageDatabase().uploadImage('${titleField.text}${user!.email}${Timestamp.now()}', _image!);
     }
     
     if(titleField.text.isEmpty || instructionsField.text.isEmpty || ingredients.isEmpty || tags.isEmpty){

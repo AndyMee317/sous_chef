@@ -64,6 +64,18 @@ class _ViewRecipePageState extends State<ViewRecipePage> {
                           ),
                         ],
                       ),
+                      recipe!['imageURL'] != "" ?
+                      Image(
+                        image: NetworkImage(recipe!['imageURL']),
+                        width: 550,
+                        height: 300,
+                      )
+                      :
+                      Image(
+                        image: NetworkImage('https://cdn3.iconfinder.com/data/icons/design-n-code/100/272127c4-8d19-4bd3-bd22-2b75ce94ccb4-512.png'),
+                        width: 350,
+                        height: 300,
+                      ),
                       Text("Ingredients:",
                         style: TextStyle(
                           fontSize: 25,
