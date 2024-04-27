@@ -2,6 +2,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sous_chef/database/firestore.dart';
+import 'package:sous_chef/database/firebase_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sous_chef/utils.dart';
 import 'dart:typed_data';
@@ -18,6 +20,7 @@ class MakeRecipePage extends StatefulWidget{
 class _MakeRecipePageState extends State<MakeRecipePage> {
 
   final FirestoreDatabase database = FirestoreDatabase();
+  final storage = FirebaseStorage.instance;
 
   final TextEditingController titleField = TextEditingController();
   final TextEditingController instructionsField = TextEditingController();
@@ -27,6 +30,7 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
   List<String> ingredients = [];
   List<String> tags = [];
   Uint8List? _image;
+  String imgURL = '';
 
   void logout() {
     FirebaseAuth.instance.signOut(); 
@@ -105,7 +109,11 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
     }
   }
 
-  void submit(){
+  void submit() async{
+
+    if(_image != null){
+      imgURL = await FirebaseStorageDatabase().uploadImage('recipe image', _image!);
+    }
     
     if(titleField.text.isEmpty || instructionsField.text.isEmpty || ingredients.isEmpty || tags.isEmpty){
       showDialog(
@@ -116,7 +124,7 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
       );
     }
     else{
-      database.postRecipe(titleField.text, instructionsField.text, ingredients, tags);
+      database.postRecipe(titleField.text, instructionsField.text, ingredients, tags, imgURL);
       Navigator.pop(context);
     }
   }

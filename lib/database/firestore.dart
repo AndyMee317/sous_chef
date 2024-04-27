@@ -7,7 +7,7 @@ class FirestoreDatabase{
 
   final CollectionReference recipes = FirebaseFirestore.instance.collection("Recipes");
 
-  Future<void> postRecipe(String title, String instructions, List<String> ingredients, List<String>tags) {
+  Future<void> postRecipe(String title, String instructions, List<String> ingredients, List<String>tags, String imageURL) {
     return recipes.add({
       "UserEmail": user!.email,
       "title": title,
@@ -15,6 +15,7 @@ class FirestoreDatabase{
       "ingredients" : ingredients,
       "tags" : tags,
       "timestamp": Timestamp.now(),
+      "imageURL": imageURL,
     });
   }
 
