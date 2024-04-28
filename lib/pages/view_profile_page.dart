@@ -90,55 +90,84 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                     Text(user!['username']),
                     Text(user!['email']),
                     StreamBuilder(
-                stream: database.searchRecipes(user!['email'], 'UserEmail'),
-                builder: (context, snapshot){
-                  if(snapshot.connectionState == ConnectionState.waiting){
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-        
-                  if (snapshot.hasError) {
-                    print(snapshot.error);
-                    return Center(
-                      child: Text('Error: ${snapshot.error}'),
-                    );
-                  }
-        
-                  final recipes = snapshot.data!.docs;
-        
-                  if(snapshot.data == null || recipes.isEmpty){
-                    return Center(
-                      child: Text("No results found")
-                    );
-                  }
-        
-                  return ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: recipes.length,
-                    itemBuilder: (context, index) {
-            
-                      final recipe = recipes[index];
-                      String title = recipe['title'];
-                      String posterEmail = recipe['UserEmail'];
-                      String id = recipe.id;
-                      Timestamp timestamp = recipe['timestamp'];
-            
-                      return ListTile(
-                        title: Text(title),
-                        subtitle: Text('by $posterEmail'),
-                        onTap: (){
-                          Navigator.pushNamed(context, '/view_recipe_page', arguments: id);
-                        },
-                        onLongPress: (){
-
-                        },
-                      );
-                    },
-                  );
-                }
-              ),
+                      stream: database.searchRecipes(user!['email'], 'UserEmail'),
+                      builder: (context, snapshot){
+                        if(snapshot.connectionState == ConnectionState.waiting){
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+              
+                        if (snapshot.hasError) {
+                          print(snapshot.error);
+                          return Center(
+                            child: Text('Error: ${snapshot.error}'),
+                          );
+                        }
+              
+                        final recipes = snapshot.data!.docs;
+              
+                        if(snapshot.data == null || recipes.isEmpty){
+                          return Center(
+                            child: Text("No results found")
+                          );
+                        }
+              
+                        return ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: recipes.length,
+                          itemBuilder: (context, index) {
+                  
+                            final recipe = recipes[index];
+                            String title = recipe['title'];
+                            String posterEmail = recipe['UserEmail'];
+                            String id = recipe.id;
+                            Timestamp timestamp = recipe['timestamp'];
+                  
+                            return ListTile(
+                              title: Text(title),
+                              subtitle: Text('by $posterEmail'),
+                              onTap: (){
+                                Navigator.pushNamed(context, '/view_recipe_page', arguments: id);
+                              },
+                              onLongPress: (){
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('Delete Recipe'),
+                                      content: Text('Do you want to delete this recipe?'),
+                                      actions: <Widget>[
+                                        ElevatedButton(
+                                          child: Text('Yes'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop(true);
+                                          },
+                                        ),
+                                        ElevatedButton(
+                                          child: Text('No'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop(false);
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ).then((result) {
+                                  if (result != null && result) {
+                                    FirebaseFirestore.instance.collection('Recipes').doc(id).delete();
+                                    setState(() {});
+                                  } else {
+                                    print('User clicked No');
+                                  }
+                                });
+                              },
+                            );
+                          },
+                        );
+                      }
+                    ),
                   ],
                 ),
               );

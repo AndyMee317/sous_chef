@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class ViewRecipePage extends StatefulWidget{
   ViewRecipePage ({super.key});
@@ -57,10 +58,16 @@ class _ViewRecipePageState extends State<ViewRecipePage> {
                               fontWeight: FontWeight.bold
                             ),
                           ),
-                          Text(" By ${recipe['UserEmail']}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal
+                          GestureDetector(
+                            child: Text(" By ${recipe['UserEmail']}",
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal
+                              ),
                             ),
+                            onTap:(){
+                              String userEmail = recipe['UserEmail'];
+                              Navigator.pushNamed(context, '/search_results_page', arguments: [userEmail, 'UserEmail']);
+                            }
                           ),
                         ],
                       ),
