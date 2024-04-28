@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
 
             ListTile(
               leading: Icon(Icons.person),
-              title: Text("My Profile"),
+              title: Text("My Recipes"),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, "/view_profile_page");

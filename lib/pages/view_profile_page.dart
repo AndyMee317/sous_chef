@@ -4,9 +4,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sous_chef/database/firestore.dart';
 
-class ViewProfilePage extends StatelessWidget{
+final FirestoreDatabase database = FirestoreDatabase();
+class ViewProfilePage extends StatefulWidget{
   ViewProfilePage({super.key});
 
+  @override
+  State<ViewProfilePage> createState() => _ViewProfilePageState();
+}
+
+class _ViewProfilePageState extends State<ViewProfilePage> {
   void logout() {
     FirebaseAuth.instance.signOut(); 
   }
@@ -16,11 +22,12 @@ class ViewProfilePage extends StatelessWidget{
   Future<DocumentSnapshot<Map<String,dynamic>>> getUserDetails() async {
     return await FirebaseFirestore.instance.collection("Users").doc(currentUser!.email).get();
   }
+
   @override 
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        title: Text("My profile"),
+        title: Text("My Recipes"),
         backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 0,
         
@@ -44,7 +51,7 @@ class ViewProfilePage extends StatelessWidget{
 
             ListTile(
               leading: Icon(Icons.person),
-              title: Text("My Profile"),
+              title: Text("My Recipes"),
               onTap: () {
                 Navigator.pop(context);
               }
@@ -61,40 +68,86 @@ class ViewProfilePage extends StatelessWidget{
           ],
         )
       ),
-      body: FutureBuilder<DocumentSnapshot<Map<String,dynamic>>>(
-        future: getUserDetails(),
-        builder: (context, snapshot){
-          if (snapshot.connectionState == ConnectionState.waiting){
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          else if (snapshot.hasError){
-            return Text("An error has occured: ${snapshot.error}");
-          }
-          else if (snapshot.hasData){
-            Map<String,dynamic>? user = snapshot.data!.data();
+      body: SingleChildScrollView(
+        child: FutureBuilder<DocumentSnapshot<Map<String,dynamic>>>(
+          future: getUserDetails(),
+          builder: (context, snapshot){
+            if (snapshot.connectionState == ConnectionState.waiting){
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            else if (snapshot.hasError){
+              return Text("An error has occured: ${snapshot.error}");
+            }
+            else if (snapshot.hasData){
+              Map<String,dynamic>? user = snapshot.data!.data();
+        
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children:[
+                    Text(user!['username']),
+                    Text(user!['email']),
+                    StreamBuilder(
+                stream: database.searchRecipes(user!['email'], 'UserEmail'),
+                builder: (context, snapshot){
+                  if(snapshot.connectionState == ConnectionState.waiting){
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+        
+                  if (snapshot.hasError) {
+                    print(snapshot.error);
+                    return Center(
+                      child: Text('Error: ${snapshot.error}'),
+                    );
+                  }
+        
+                  final recipes = snapshot.data!.docs;
+        
+                  if(snapshot.data == null || recipes.isEmpty){
+                    return Center(
+                      child: Text("No results found")
+                    );
+                  }
+        
+                  return ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: recipes.length,
+                    itemBuilder: (context, index) {
+            
+                      final recipe = recipes[index];
+                      String title = recipe['title'];
+                      String posterEmail = recipe['UserEmail'];
+                      String id = recipe.id;
+                      Timestamp timestamp = recipe['timestamp'];
+            
+                      return ListTile(
+                        title: Text(title),
+                        subtitle: Text('by $posterEmail'),
+                        onTap: (){
+                          Navigator.pushNamed(context, '/view_recipe_page', arguments: id);
+                        },
+                        onLongPress: (){
 
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children:[
-                  Text(user!['username']),
-                  Text(user!['email']),
-                  ElevatedButton(
-                    onPressed: (){
-
-                    }, 
-                    child: Text('View My Recipes'),
-                  ),
-                ],
+                        },
+                      );
+                    },
+                  );
+                }
               ),
-            );
+                  ],
+                ),
+              );
+            }
+            else{
+              return Text("Sorry, nothing");
+            }
           }
-          else{
-            return Text("Sorry, nothing");
-          }
-        }
+        ),
       ),
     );
   }
