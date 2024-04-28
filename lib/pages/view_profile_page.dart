@@ -74,11 +74,20 @@ class ViewProfilePage extends StatelessWidget{
           else if (snapshot.hasData){
             Map<String,dynamic>? user = snapshot.data!.data();
 
-            return Column(
-              children:[
-                Text(user!['email']),
-                Text(user['username']),
-              ],
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:[
+                  Text(user!['username']),
+                  Text(user!['email']),
+                  ElevatedButton(
+                    onPressed: (){
+                      
+                    }, 
+                    child: Text('View My Recipes'),
+                  ),
+                ],
+              ),
             );
           }
           else{

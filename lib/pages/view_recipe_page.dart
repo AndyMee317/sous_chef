@@ -114,9 +114,16 @@ class _ViewRecipePageState extends State<ViewRecipePage> {
                         itemCount: recipe['tags'].length,
                         
                         itemBuilder: (BuildContext ctxt, int index){
+                          String tag = recipe['tags'][index];
                           return Center(
                             child: GestureDetector(
-                              child: Text("#" + recipe['tags'][index])
+                              child: Text("#" + recipe['tags'][index]),
+                              onTap:(){
+                                Navigator.pushNamed(
+                                  context, '/search_results_page',
+                                  arguments: [tag,'tags'],
+                                );
+                              }
                             ),
                           );
                         }
