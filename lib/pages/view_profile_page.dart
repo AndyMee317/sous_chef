@@ -1,7 +1,8 @@
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sous_chef/database/firestore.dart';
 
 class ViewProfilePage extends StatelessWidget{
   ViewProfilePage({super.key});
@@ -82,7 +83,7 @@ class ViewProfilePage extends StatelessWidget{
                   Text(user!['email']),
                   ElevatedButton(
                     onPressed: (){
-                      
+
                     }, 
                     child: Text('View My Recipes'),
                   ),

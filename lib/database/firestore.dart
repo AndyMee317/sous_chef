@@ -43,6 +43,10 @@ class FirestoreDatabase{
       final searchResultStream = FirebaseFirestore.instance.collection('Recipes').orderBy('timestamp').where('tags', arrayContains: query).snapshots();
       return searchResultStream;
     }
+    else if(type == 'UserEmail'){
+      final searchResultsStream = FirebaseFirestore.instance.collection('Recipes').orderBy('timestamp').where('UserEmail', isEqualTo: query).snapshots();
+      return searchResultsStream;
+    }
     
     // this shouldn't happen, but in case something weird happens, just return everything
     final recipeStream = FirebaseFirestore.instance.collection('Recipes').orderBy('timestamp', descending: true).snapshots();
