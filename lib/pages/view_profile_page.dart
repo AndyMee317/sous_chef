@@ -53,7 +53,7 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                   children:[
                     Text('Recipes by ${user!['username']}'),
                     StreamBuilder(
-                      stream: database.searchRecipes(user!['email'], 'UserEmail'),
+                      stream: database.searchRecipes(user['email'], 'UserEmail'),
                       builder: (context, snapshot){
                         if(snapshot.connectionState == ConnectionState.waiting){
                           return Center(
@@ -86,7 +86,6 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                             String title = recipe['title'];
                             String posterEmail = recipe['UserEmail'];
                             String id = recipe.id;
-                            Timestamp timestamp = recipe['timestamp'];
                   
                             return ListTile(
                               title: Text(title),

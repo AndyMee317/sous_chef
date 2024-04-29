@@ -14,11 +14,10 @@ class SearchBarPage extends StatefulWidget{
 }
 
 class _SearchBarPageState extends State<SearchBarPage> {
-  @override 
-  
   void logout() {
     FirebaseAuth.instance.signOut(); 
   }
+  @override 
 
   @override
   Widget build(BuildContext context){

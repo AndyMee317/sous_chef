@@ -1,5 +1,4 @@
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sous_chef/database/firestore.dart';
@@ -116,7 +115,6 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                     String title = recipe['title'];
                     String posterEmail = recipe['UserEmail'];
                     String id = recipe.id;
-                    Timestamp timestamp = recipe['timestamp'];
     
                     return ListTile(
                       title: Text(title),

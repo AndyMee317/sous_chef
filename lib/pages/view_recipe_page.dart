@@ -104,7 +104,7 @@ class _ViewRecipePageState extends State<ViewRecipePage> {
               recipeIsLiked = true;
             }
 
-            List<dynamic> userDislikes = recipe!['dislikes'] ?? [];
+            List<dynamic> userDislikes = recipe['dislikes'] ?? [];
             if (userDislikes.contains(user!.email)){
               recipeIsDisliked = true;
             }
@@ -116,7 +116,7 @@ class _ViewRecipePageState extends State<ViewRecipePage> {
                   children: [
                     Row(
                       children: [
-                        Text(recipe!['title'],
+                        Text(recipe['title'],
                           style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold
@@ -135,9 +135,9 @@ class _ViewRecipePageState extends State<ViewRecipePage> {
                         ),
                       ],
                     ),
-                    recipe!['imageURL'] != "" ?
+                    recipe['imageURL'] != "" ?
                     Image(
-                      image: NetworkImage(recipe!['imageURL']),
+                      image: NetworkImage(recipe['imageURL']),
                       width: 550,
                       height: 300,
                     )
