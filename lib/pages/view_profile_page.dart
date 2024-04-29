@@ -109,7 +109,7 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
               
                         if(snapshot.data == null || recipes.isEmpty){
                           return Center(
-                            child: Text("No results found")
+                            child: Text("No recipes posted yet")
                           );
                         }
               

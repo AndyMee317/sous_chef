@@ -78,7 +78,6 @@ class _HomePageState extends State<HomePage> {
         children: [
           Container(
             margin: const EdgeInsets.all(10.0),
-            alignment: Alignment.bottomCenter,
       
             child: SingleChildScrollView(
               child: Column(
