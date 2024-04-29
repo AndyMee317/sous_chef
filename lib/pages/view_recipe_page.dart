@@ -14,7 +14,7 @@ class _ViewRecipePageState extends State<ViewRecipePage> {
 
   User? user = FirebaseAuth.instance.currentUser;
   bool recipeIsLiked = false;
-  
+  bool recipeIsDisliked = false;
 
   void logout() {
     FirebaseAuth.instance.signOut(); 
@@ -35,14 +35,46 @@ class _ViewRecipePageState extends State<ViewRecipePage> {
     });
 
     DocumentReference thisRecipe = FirebaseFirestore.instance.collection('Recipes').doc(id);
-    if(recipeIsLiked){
+    if(recipeIsLiked && recipeIsDisliked){
+      recipeIsDisliked = !recipeIsDisliked;
       thisRecipe.update({
-        'likes' : FieldValue.arrayUnion([user!.email])
+        'likes' : FieldValue.arrayUnion([user!.email]),
+        'dislikes' : FieldValue.arrayRemove([user!.email])
+      });
+    }
+    else if(recipeIsLiked){
+      thisRecipe.update({
+        'likes' : FieldValue.arrayUnion([user!.email]),
       });
     }
     else{
       thisRecipe.update({
         'likes' : FieldValue.arrayRemove([user!.email])
+      });
+    }
+  }
+
+  void dislikeToggle(){
+    setState(() {
+      recipeIsDisliked = !recipeIsDisliked;
+    });
+
+    DocumentReference thisRecipe = FirebaseFirestore.instance.collection('Recipes').doc(id);
+    if(recipeIsDisliked && recipeIsLiked){
+      recipeIsLiked = !recipeIsLiked;
+      thisRecipe.update({
+        'likes' : FieldValue.arrayRemove([user!.email]),
+        'dislikes' : FieldValue.arrayUnion([user!.email])
+      });
+    }
+    else if(recipeIsDisliked){
+      thisRecipe.update({
+        'dislikes' : FieldValue.arrayUnion([user!.email]),
+      });
+    }
+    else{
+      thisRecipe.update({
+        'dislikes' : FieldValue.arrayRemove([user!.email])
       });
     }
   }
@@ -70,6 +102,11 @@ class _ViewRecipePageState extends State<ViewRecipePage> {
             List<dynamic> userLikes = recipe!['likes'] ?? [];
             if (userLikes.contains(user!.email)){
               recipeIsLiked = true;
+            }
+
+            List<dynamic> userDislikes = recipe!['dislikes'] ?? [];
+            if (userDislikes.contains(user!.email)){
+              recipeIsDisliked = true;
             }
 
             return SingleChildScrollView(
@@ -112,7 +149,11 @@ class _ViewRecipePageState extends State<ViewRecipePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Like(liked: recipeIsLiked, onTap: likeToggle),
-                      Text('${userLikes.length}'),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('${userLikes.length - userDislikes.length}'),
+                      ),
+                      Dislike(disliked: recipeIsDisliked, onTap: dislikeToggle)
                     ],
                   ),
                   Text("Ingredients:",
@@ -191,6 +232,22 @@ class Like extends StatelessWidget{
       onTap: onTap,
       child: Icon(
         liked ? Icons.thumb_up: Icons.thumb_up_outlined
+      ),
+    );
+  }
+}
+
+class Dislike extends StatelessWidget{
+  final bool disliked ;
+  void Function()? onTap;
+  Dislike({super.key, required this.disliked, required this.onTap});
+
+  @override 
+  Widget build(BuildContext context){
+    return GestureDetector(
+      onTap: onTap,
+      child: Icon(
+        disliked ? Icons.thumb_down: Icons.thumb_down_outlined
       ),
     );
   }

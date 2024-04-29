@@ -17,6 +17,7 @@ class FirestoreDatabase{
       "timestamp": Timestamp.now(),
       "imageURL": imageURL,
       "likes": [],
+      "dislikes": [],
     });
   }
 
