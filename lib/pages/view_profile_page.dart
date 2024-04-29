@@ -51,8 +51,7 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children:[
-                    Text(user!['username']),
-                    Text(user!['email']),
+                    Text('Recipes by ${user!['username']}'),
                     StreamBuilder(
                       stream: database.searchRecipes(user!['email'], 'UserEmail'),
                       builder: (context, snapshot){

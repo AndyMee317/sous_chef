@@ -7,6 +7,7 @@ import 'firebase_options.dart';
 // pages
 import 'package:sous_chef/auth/auth.dart';
 import 'package:sous_chef/auth/login_or_register.dart';
+import 'package:sous_chef/pages/forgot_password_page.dart';
 import 'package:sous_chef/pages/home_page.dart';
 import 'package:sous_chef/pages/view_profile_page.dart';
 import 'package:sous_chef/pages/make_recipe_page.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         home: AuthPage(),
         routes: {
           "/login_or_register_page": (context) => const LoginOrRegister(),
+          "/forgot_password_page": (context) => const ForgotPasswordPage(),
           "/home_page": (context) => const HomePage(),
           "/view_profile_page": (context) => ViewProfilePage(),
           "/make_recipe_page": (context) => const MakeRecipePage(),
