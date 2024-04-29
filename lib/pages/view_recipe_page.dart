@@ -109,106 +109,109 @@ class _ViewRecipePageState extends State<ViewRecipePage> {
               recipeIsDisliked = true;
             }
 
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Text(recipe!['title'],
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-                      GestureDetector(
-                        child: Text(" By ${recipe['UserEmail']}",
+            return Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(recipe!['title'],
                           style: TextStyle(
-                            fontWeight: FontWeight.normal
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold
                           ),
                         ),
-                        onTap:(){
-                          String userEmail = recipe['UserEmail'];
-                          Navigator.pushNamed(context, '/search_results_page', arguments: [userEmail, 'UserEmail']);
-                        }
-                      ),
-                    ],
-                  ),
-                  recipe!['imageURL'] != "" ?
-                  Image(
-                    image: NetworkImage(recipe!['imageURL']),
-                    width: 550,
-                    height: 300,
-                  )
-                  :
-                  Image(
-                    image: NetworkImage('https://cdn3.iconfinder.com/data/icons/design-n-code/100/272127c4-8d19-4bd3-bd22-2b75ce94ccb4-512.png'),
-                    width: 350,
-                    height: 300,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Like(liked: recipeIsLiked, onTap: likeToggle),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text('${userLikes.length - userDislikes.length}'),
-                      ),
-                      Dislike(disliked: recipeIsDisliked, onTap: dislikeToggle)
-                    ],
-                  ),
-                  Text("Ingredients:",
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
-                  ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: recipe['ingredients'].length,
-                    
-                    itemBuilder: (BuildContext ctxt, int index){
-                      return Center(child: Text("\u2022 " + recipe['ingredients'][index]));
-                    }
-                  ),
-                  Text("Instructions:",
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
-                  Text(recipe['instructions'],
-                    style: TextStyle(
-                      fontSize: 18
-                    ),
-                  ),
-                  Text("Tags: ",
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
-                  ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: recipe['tags'].length,
-                    
-                    itemBuilder: (BuildContext ctxt, int index){
-                      String tag = recipe['tags'][index];
-                      return Center(
-                        child: GestureDetector(
-                          child: Text("#" + recipe['tags'][index]),
+                        GestureDetector(
+                          child: Text(" By ${recipe['UserEmail']}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal
+                            ),
+                          ),
                           onTap:(){
-                            Navigator.pushNamed(
-                              context, '/search_results_page',
-                              arguments: [tag,'tags'],
-                            );
+                            String userEmail = recipe['UserEmail'];
+                            Navigator.pushNamed(context, '/search_results_page', arguments: [userEmail, 'UserEmail']);
                           }
                         ),
-                      );
-                    }
-                  ),
-                ],
+                      ],
+                    ),
+                    recipe!['imageURL'] != "" ?
+                    Image(
+                      image: NetworkImage(recipe!['imageURL']),
+                      width: 550,
+                      height: 300,
+                    )
+                    :
+                    Image(
+                      image: NetworkImage('https://cdn3.iconfinder.com/data/icons/design-n-code/100/272127c4-8d19-4bd3-bd22-2b75ce94ccb4-512.png'),
+                      width: 350,
+                      height: 300,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Like(liked: recipeIsLiked, onTap: likeToggle),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('${userLikes.length - userDislikes.length}'),
+                        ),
+                        Dislike(disliked: recipeIsDisliked, onTap: dislikeToggle)
+                      ],
+                    ),
+                    Text("Ingredients:",
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: recipe['ingredients'].length,
+                      
+                      itemBuilder: (BuildContext ctxt, int index){
+                        return Center(child: Text("\u2022 " + recipe['ingredients'][index]));
+                      }
+                    ),
+                    Text("Instructions:",
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    Text(recipe['instructions'],
+                      style: TextStyle(
+                        fontSize: 18
+                      ),
+                    ),
+                    Text("Tags: ",
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: recipe['tags'].length,
+                      
+                      itemBuilder: (BuildContext ctxt, int index){
+                        String tag = recipe['tags'][index];
+                        return Center(
+                          child: GestureDetector(
+                            child: Text("#" + recipe['tags'][index]),
+                            onTap:(){
+                              Navigator.pushNamed(
+                                context, '/search_results_page',
+                                arguments: [tag,'tags'],
+                              );
+                            }
+                          ),
+                        );
+                      }
+                    ),
+                  ],
+                ),
               ),
             );
           }
