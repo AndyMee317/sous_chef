@@ -35,10 +35,6 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
   Uint8List? _image;
   String imgURL = '';
 
-  void logout() {
-    FirebaseAuth.instance.signOut(); 
-  }
-
     void selectImage()async{
       Uint8List img = await pickImage(ImageSource.gallery);
       setState((){
@@ -142,12 +138,6 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
         appBar: AppBar(
           title: Text("Make Recipe"),
           backgroundColor: Theme.of(context).colorScheme.primary,
-          actions: [
-            IconButton(
-              onPressed: logout,
-              icon: Icon(Icons.logout),
-            ),
-          ],
           bottom: const TabBar(
             labelColor: Colors.white,
             tabs: <Widget>[
@@ -182,29 +172,8 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('2. Preparation instructions'),
-                  Padding(
-                    padding: const EdgeInsets.all(26.0),
-                    child: SizedBox(
-                      child: TextField(
-                        controller: instructionsField,
-                        maxLines: 5,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Explain how to prepare your recipe',
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children:[
-                  Text("3. List of ingredients"),
+                  Text("2. List of ingredients"),
                   Padding(
                     padding: const EdgeInsets.all(26.0),
                     child: TextField(
@@ -242,6 +211,27 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
                         return Text("\u2022 ${ingredients[Index]}");
                       }
                     ) 
+                  ),
+                ],
+              ),
+            ),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('3. Preparation instructions'),
+                  Padding(
+                    padding: const EdgeInsets.all(26.0),
+                    child: SizedBox(
+                      child: TextField(
+                        controller: instructionsField,
+                        maxLines: 5,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Explain how to prepare your recipe',
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -296,7 +286,7 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("5. Upload dish image "),
+                  Text("5. (Optional) Upload dish image "),
 
                   _image != null ? 
                     Image(
